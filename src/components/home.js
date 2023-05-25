@@ -4,9 +4,8 @@ function Home() {
   return (
     <div>
       <br/>
-      <br/>
       <center>
-      <img src={karnataka3} alt="Profile" style={{ maxWidth: "30%" }} />
+      <img src={karnataka3} alt="Profile" style={{ maxWidth: "50%" }} />
       </ center>
     </div>
   );

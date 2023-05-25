@@ -1,19 +1,27 @@
 
 import axios from 'axios';
 import React,{useEffect, useState} from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+
 export default function Range6() {
+
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchrange6(100000);
   },[]);
 
-  const[data,setData] = useState([]);
 
   const fetchrange6 = (start,end) => {
     axios.get(`http://localhost:8080/election/constrange/${start}`).then((respon) => {
       const response = respon.data;
       setData(response);
     } )
+    .finally(() => {
+      setIsLoading(false); // Set loading state to false after the request is completed
+    });
   }
   const range6Style = {
     borderCollapse: 'collapse',
@@ -38,6 +46,10 @@ export default function Range6() {
     <div>
       <center>
         <h1>Constituency won with margin Range 100000 And Above</h1>
+        {isLoading ? ( // Render loading button if isLoading is true
+          // <button disabled>Loading...</button>
+          <FontAwesomeIcon icon={faSpinner} spin size="3x" /> // Display loader icon while loading
+        ) : (
         <range6 style={range6Style}>
         <thead>
           <tr>
@@ -64,6 +76,7 @@ export default function Range6() {
           ))}
         </tbody>
       </range6>
+        )}
         </center>
         </div>
   )

@@ -1,19 +1,29 @@
 import React,{useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 export default function Table1() {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     fetchTable1();
   },[]);
 
-  const[data,setData] = useState([]);
+  
 
   const fetchTable1 = () => {
+    setIsLoading(true);
+
     axios.get('http://localhost:8080/election/highestmargin').then((respon) => {
       const response = respon.data;
       setData(response);
     } )
+    .finally(() => {
+      setIsLoading(false); // Set loading state to false after the request is completed
+    });
   }
 
   const table1Style = {
@@ -52,6 +62,10 @@ export default function Table1() {
       </div>
       <br/>
       <center>
+      {isLoading ? ( // Render loading button if isLoading is true
+          // <button disabled>Loading...</button>
+          <FontAwesomeIcon icon={faSpinner} spin size="3x" /> // Display loader icon while loading
+        ) : (
       <table1 style={table1Style}>
         <thead>
           <tr>
@@ -82,6 +96,7 @@ export default function Table1() {
           ))}
         </tbody>
       </table1>
+        )}
       </ center>
       </>
     );
