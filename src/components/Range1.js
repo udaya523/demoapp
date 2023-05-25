@@ -121,6 +121,7 @@ export default function Range1() {
           // <button disabled>Loading...</button>
           <FontAwesomeIcon icon={faSpinner} spin size="3x" /> // Display loader icon while loading
         ) : (
+          <center>
           <table style={range1Style}>
             <thead>
               <tr>
@@ -144,10 +145,14 @@ export default function Range1() {
                   <td style={range1CellStyle}>{rowData.totvotes}</td>
                   <td style={range1CellStyle}>{rowData.difference}</td>
                 </tr>
-              ))}
+                
+              )
+              )}
             </tbody>
           </table>
-        )}
+          </center>
+        ) 
+        }
       </center>
     </div>
   );
